@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edit Task</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<form action="#" th:action="@{/tasks/addTask}" th:object="${task}" method="post">
+  <input type="hidden" th:field="*{id}" />
+  <input type="text" name="description" placeholder="Description" th:value="${task.description}" />
+  <label for="status">Status:</label>
+  <select id="status" name="status" th:field="*{status}">
+    <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+  </select>
+  <button type="submit">Save</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Task List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<h1>Task List</h1>
+
+<form action="/tasks/search" method="get">
+    <input type="text" name="query" placeholder="Search tasks...">
+    <input type="submit" value="Search">
+</form>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Итерация по содержимому объекта Page<Task> -->
+    <tr th:each="task : ${tasks.content}">
+        <td th:text="${task.id}"></td>
+        <td th:text="${task.description}"></td>
+        <td th:text="${task.status}"></td>
+        <td>
+            <a th:href="@{/tasks/{id}/edit(id=${task.id})}">Edit</a> |
+            <a th:href="@{/tasks/{id}/delete(id=${task.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/tasks/add}">Add New Task</a>
+
+</body>
+</html>

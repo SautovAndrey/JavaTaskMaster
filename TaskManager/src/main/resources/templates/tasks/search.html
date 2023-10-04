@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Tasks</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+</head>
+<body>
+<h1>Search Tasks</h1>
+<form action="/tasks/search" method="get">
+    <input type="text" name="query" placeholder="Search tasks..." required>
+    <input type="submit" value="Search">
+</form>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks.content}">
+        <td th:text="${task.id}"></td>
+        <td th:text="${task.description}"></td>
+        <td th:text="${task.status}"></td>
+        <td>
+            <a th:href="@{/tasks/{id}/edit(id=${task.id})}">Edit</a> |
+            <a th:href="@{/tasks/{id}/delete(id=${task.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/tasks/add}">Add New Task</a>
+</body>
+</html>
