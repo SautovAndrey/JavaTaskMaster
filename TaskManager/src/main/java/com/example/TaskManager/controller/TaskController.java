@@ -79,6 +79,7 @@ public class TaskController {
         logger.info("Viewing tasks");
         Page<Task> tasks = taskService.findAllTasks(pageable);
         model.addAttribute("tasks", tasks);
+        logger.info("Entering viewTasks method");
         return "tasks";
     }
 
