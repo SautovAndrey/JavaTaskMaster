@@ -1,22 +1,25 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Add Task</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
-</head>
-<body>
-
 <h1>Add New Task</h1>
-
+<div th:if="${#authorization.expression('isAuthenticated()')}">
+    <div class="user-greeting">Hello, <span th:text="${#authentication.name}"></span></div>
+</div>
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
 <form action="#" th:action="@{/tasks/addTask}" th:object="${task}" method="post">
     <input type="hidden" th:field="*{id}" />
     <input type="text" th:field="*{description}" placeholder="Description"/>
+
     <select th:field="*{status}">
         <option th:each="status : ${T(com.example.TaskManager.domain.Status).values()}" th:value="${status}" th:text="${status}"></option>
     </select>
+
+    <!-- Этот блок будет виден только админу -->
+    <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+        <select th:field="*{user.id}">
+            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
+        </select>
+    </div>
+
     <button type="submit">Save</button>
+    <div style="position: absolute; bottom: 10px; left: 10px;">
+        <a href="/tasks/view" class="button">Back to Task List</a>
+    </div>
 </form>
-
-
-</body>
-</html>

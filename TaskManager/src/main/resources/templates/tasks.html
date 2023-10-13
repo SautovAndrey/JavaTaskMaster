@@ -7,37 +7,76 @@
 <body>
 
 <h1>Task List</h1>
+<div th:if="${#authorization.expression('isAuthenticated()')}">
+    <div class="user-greeting">Hello, <span th:text="${#authentication.name}"></span></div>
+</div>
 
+<!-- Кнопка выхода -->
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout">
+</form>
 
+<!-- Остальной код -->
 <form action="/tasks/search" method="get">
     <input type="text" name="query" placeholder="Search tasks...">
     <input type="submit" value="Search">
 </form>
 
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Description</th>
-        <th>Status</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Итерация по содержимому объекта Page<Task> -->
-    <tr th:each="task : ${tasks.content}">
-        <td th:text="${task.id}"></td>
-        <td th:text="${task.description}"></td>
-        <td th:text="${task.status}"></td>
-        <td>
-            <a th:href="@{/tasks/{id}/edit(id=${task.id})}">Edit</a> |
-            <a th:href="@{/tasks/{id}/delete(id=${task.id})}">Delete</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<!-- Таблица для обычных пользователей -->
+<div th:if="${#authorization.expression('hasRole(''ROLE_USER'')') and userTasks != null}">
+    <h2>User Actions</h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>User</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${userTasks.content}">
+            <td th:text="${task.id}"></td>
+            <td th:text="${task.description}"></td>
+            <td th:text="${task.status}"></td>
+            <td th:if="${task.user != null}" th:text="${task.user.username}">[No User]</td>
+            <td>
+                <a th:href="@{/tasks/{id}/edit(id=${task.id})}">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
-<a th:href="@{/tasks/add}">Add New Task</a>
+<!-- Контент только для админа -->
+<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') and adminTasks != null}">
+    <h2>Admin Actions</h2>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>User</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${adminTasks.content}">
+            <td th:text="${task.id}"></td>
+            <td th:text="${task.description}"></td>
+            <td th:text="${task.status}"></td>
+            <td th:if="${task.user != null}" th:text="${task.user.username}">[No User]</td>
+            <td>
+                <a th:href="@{/tasks/{id}/edit(id=${task.id})}">Edit</a> |
+                <a th:href="@{/tasks/{id}/delete(id=${task.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- Кнопка добавления задачи для Админа -->
+    <a th:href="@{/tasks/add}">Add New Task</a>
+</div>
 
 </body>
 </html>

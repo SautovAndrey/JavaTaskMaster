@@ -2,6 +2,7 @@ package com.example.TaskManager.service;
 
 import com.example.TaskManager.dao.TaskDAO;
 import com.example.TaskManager.domain.Task;
+import com.example.TaskManager.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,14 @@ public class TaskService {
         return tasks;
     }
 
+    public Page<Task> searchUserTasks(User user, String keyword, Pageable pageable) {
+        return taskDAO.searchUserTasks(user, keyword, pageable);
+    }
     public Page<Task> searchTasks(String keyword, Pageable pageable) {
         return taskDAO.searchTasks(keyword, pageable);
     }
+    public Page<Task> findTasksByUser(User user, Pageable pageable) {
+        return taskDAO.findTasksByUser(user, pageable);
+    }
+
 }

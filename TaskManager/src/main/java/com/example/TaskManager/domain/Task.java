@@ -13,7 +13,7 @@ import jakarta.validation.constraints.Size;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
     @Column
     @NotNull
@@ -23,5 +23,9 @@ public class Task {
     @Enumerated(EnumType.STRING)
     @Column
     private Status status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }
 

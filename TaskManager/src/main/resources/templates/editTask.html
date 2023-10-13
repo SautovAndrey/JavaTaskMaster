@@ -2,19 +2,41 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Edit Task</title>
+  <h1>Edit Task</h1>
+  <div th:if="${#authorization.expression('isAuthenticated()')}">
+    <div class="user-greeting">Hello, <span th:text="${#authentication.name}"></span></div>
+  </div>
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
 </head>
 <body>
 
 <form action="#" th:action="@{/tasks/addTask}" th:object="${task}" method="post">
   <input type="hidden" th:field="*{id}" />
+
+  <!-- Общая часть для всех -->
   <input type="text" name="description" placeholder="Description" th:value="${task.description}" />
   <label for="status">Status:</label>
   <select id="status" name="status" th:field="*{status}">
     <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
   </select>
+
+  <!-- Для администратора -->
+  <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="assign-form">
+    <label for="user">Assign to:</label>
+    <select id="user" name="user" th:field="*{user.id}">
+      <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
+    </select>
+  </div>
+
+  <!-- Для обычного пользователя -->
+  <div th:if="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}">
+
+  </div>
+
   <button type="submit">Save</button>
 </form>
-
+<div style="position: absolute; bottom: 10px; left: 10px;">
+  <a href="/tasks/view" class="button">Back to Task List</a>
+</div>
 </body>
 </html>

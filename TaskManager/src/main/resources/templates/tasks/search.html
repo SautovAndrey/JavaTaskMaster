@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Tasks</title>
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <div class="user-greeting">Hello, <span th:text="${#authentication.name}"></span></div>
+    </div>
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
 </head>
 <body>
@@ -12,6 +15,13 @@
     <input type="text" name="query" placeholder="Search tasks..." required>
     <input type="submit" value="Search">
 </form>
+<style>
+    .actions {
+        display: flex;
+        align-items: center;
+    }
+</style>
+
 <table border="1">
     <thead>
     <tr>
@@ -27,12 +37,23 @@
         <td th:text="${task.description}"></td>
         <td th:text="${task.status}"></td>
         <td>
-            <a th:href="@{/tasks/{id}/edit(id=${task.id})}">Edit</a> |
-            <a th:href="@{/tasks/{id}/delete(id=${task.id})}">Delete</a>
+            <div class="actions">
+                <a th:href="@{/tasks/{id}/edit(id=${task.id})}">Edit</a>
+                <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                    <a th:href="@{/tasks/{id}/delete(id=${task.id})}">Delete</a>
+                </div>
+            </div>
         </td>
     </tr>
     </tbody>
 </table>
-<a th:href="@{/tasks/add}">Add New Task</a>
+
+<!-- Кнопка добавления задачи доступна только админу -->
+<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+    <a th:href="@{/tasks/add}" class="button">Add New Task</a>
+</div>
+<div style="position: absolute; bottom: 10px; left: 10px;">
+    <a href="/tasks/view" class="button">Back to Task List</a>
+</div>
 </body>
 </html>

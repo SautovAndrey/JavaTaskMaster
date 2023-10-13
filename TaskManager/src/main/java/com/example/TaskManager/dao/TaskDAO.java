@@ -1,6 +1,7 @@
 package com.example.TaskManager.dao;
 
 import com.example.TaskManager.domain.Task;
+import com.example.TaskManager.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,13 +21,13 @@ public class TaskDAO {
         this.taskRepository = taskRepository;
     }
 
-    // Create
+    // Создание
     public Task createTask(Task task) {
         logger.info("Creating task: {}", task);
         return taskRepository.save(task);
     }
 
-    // Read
+    // Чтение
     public Task getTaskById(int id) {
         return taskRepository.findById(id).orElse(null);
     }
@@ -39,19 +40,26 @@ public class TaskDAO {
         return null;
     }
 
-    // Delete
+    // Удаление
     public void deleteTask(int id) {
         taskRepository.deleteById(id);
     }
 
-    // Read All with Pagination
     public Page<Task> findAllTasks(Pageable pageable) {
         logger.info("Pageable: {}", pageable);
         return taskRepository.findAll(pageable);
     }
 
-    // Search
+    // Поиск
     public Page<Task> searchTasks(String keyword, Pageable pageable) {
         return taskRepository.searchTasks(keyword, pageable);
     }
+
+    public Page<Task> findTasksByUser(User user, Pageable pageable) {
+        return taskRepository.findTasksByUser(user, pageable);
+    }
+    public Page<Task> searchUserTasks(User user, String keyword, Pageable pageable) {
+        return taskRepository.searchUserTasks(user, keyword, pageable);
+    }
+
 }

@@ -28,10 +28,12 @@ dependencies {
 	implementation("org.hibernate.orm:hibernate-core:6.3.1.Final")
 	implementation("org.springframework.boot:spring-boot-starter-logging:3.1.4")
 	implementation("org.springframework.boot:spring-boot-starter-validation:3.1.4")
-	//implementation("org.springframework.boot:spring-boot-starter-security")
-//	implementation("org.springframework.security:spring-security-config:6.1.4")
-//	implementation("org.springframework.security:spring-security-web:6.1.4")
-//  implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE")
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("org.springframework.security:spring-security-config:6.1.4")
+	implementation("org.springframework.security:spring-security-web:6.1.4")
+  implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE")
+
+
 
 
 
