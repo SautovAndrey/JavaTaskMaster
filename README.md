@@ -16,8 +16,9 @@ Java-приложение для управления задачами.
 
 ![](https://komarev.com/ghpvc/?username=sautovandrey)
 
-![Web App Screenshot](link-to-screenshot-1)
-![Web App Screenshot](link-to-screenshot-2)
+![Web App Screenshot](https://github.com/SautovAndrey/JavaTaskMaster/blob/93e1144362d1278a79f0fc11231e83a5359bf537/assets/2023-10-13_12-33-41.png)
+![Web App Screenshot](https://github.com/SautovAndrey/JavaTaskMaster/blob/93e1144362d1278a79f0fc11231e83a5359bf537/assets/2023-10-13_12-34-01.png)
+![Web App Screenshot](https://github.com/SautovAndrey/JavaTaskMaster/blob/93e1144362d1278a79f0fc11231e83a5359bf537/assets/2023-10-13_12-34-27.png)
 
 ## 📌 Описание
 
