@@ -4,6 +4,7 @@ import com.example.TaskManager.dao.RoleRepository;
 import com.example.TaskManager.dao.UserRepository;
 import com.example.TaskManager.domain.Role;
 import com.example.TaskManager.domain.User;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -41,7 +42,7 @@ public class AuthController {
     }
 
     @PostMapping("/registration")
-    public String addUser(User user, Model model) {
+    public String addUser(@Valid User user, Model model) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
 
         if (userFromDb != null) {
@@ -52,7 +53,7 @@ public class AuthController {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Role userRole = roleRepository.findByName("USER");
+        Role userRole = roleRepository.findByName("ROLE_USER");
         if (userRole != null) {
             user.getRoles().add(userRole);
         } else {
